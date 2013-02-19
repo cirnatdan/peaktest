@@ -13,7 +13,8 @@ class Kernel
     {
         //register services
         $this->registerService("http_client", new \Peak\Service\HttpClient());
-        $this->registerService("google_geocode_client", new Service\GoogleGeocodeClient($this->get("http_client")));
+        $this->registerService("google_geocode_binder", new \Peak\Service\GoogleGeocodeBinder());
+        $this->registerService("google_geocode_client", new \Peak\Service\GoogleGeocodeClient($this->get("http_client"), $this->get("google_geocode_binder")));
     }
     
     public function registerService($alias, $service)

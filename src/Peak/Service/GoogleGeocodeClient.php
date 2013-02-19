@@ -8,15 +8,22 @@ use Peak\Model\GoogleGeocodeRequest;
 class GoogleGeocodeClient
 {
     private $httpClient;
+    private $binder;
     
-    public function __construct(HttpClient $httpClient)
+    public function __construct(HttpClient $httpClient, GoogleGeocodeBinder $binder)
     {
         $this->httpClient = $httpClient;
+        $this->binder = $binder;
     }
     
-    public function getLocation($address)
+    public function getFirstLocation($address)
     {
-        $results = json_decode($this->httpClient->query(new GoogleGeocodeRequest($address)));
-        print_r($results);
+        $result = $this->query($address);
+        return $this->binder->bindLocation($result[0]);
+    }
+
+    public function query($address)
+    {
+        return json_decode($this->httpClient->query(new GoogleGeocodeRequest($address)))->results;
     }
 }
