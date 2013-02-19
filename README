@@ -1,0 +1,9 @@
+Google Geocode API example application.
+
+Run example:
+
+php app.php "Madison Square"
+
+or
+
+php app.php Ciocana
